@@ -23,21 +23,27 @@ A [Claude Code / Claude Agent Skills](https://agentskills.io/) skill that genera
 
 ## Install
 
-### Option 1: Paste this to an AI (recommended)
+### Option 1: One-line install (recommended)
+
+```bash
+npx skills add https://github.com/op7418/guizang-ppt-skill --skill guizang-ppt-skill
+```
+
+### Option 2: Paste this to an AI
 
 > Install the `guizang-ppt-skill` Claude Code skill for me. Steps:
 >
 > 1. Make sure `~/.claude/skills/` exists (create if not)
-> 2. Run `git clone https://github.com/op7418/guizang-ppt-skill.git ~/.claude/skills/magazine-web-ppt`
-> 3. Verify: `ls ~/.claude/skills/magazine-web-ppt/` should show `SKILL.md`, `assets/`, `references/`
+> 2. Run `git clone https://github.com/op7418/guizang-ppt-skill.git ~/.claude/skills/guizang-ppt-skill`
+> 3. Verify: `ls ~/.claude/skills/guizang-ppt-skill/` should show `SKILL.md`, `assets/`, `references/`
 > 4. Tell me when done. Later, saying things like "make me a magazine-style deck" will trigger this skill.
 
 Paste the block above into Claude Code / Cursor / any AI agent with shell access and it handles the install.
 
-### Option 2: Manual CLI
+### Option 3: Manual CLI
 
 ```bash
-git clone https://github.com/op7418/guizang-ppt-skill.git ~/.claude/skills/magazine-web-ppt
+git clone https://github.com/op7418/guizang-ppt-skill.git ~/.claude/skills/guizang-ppt-skill
 ```
 
 ### How to trigger it
@@ -65,7 +71,7 @@ Full spec in [`SKILL.md`](./SKILL.md).
 ## Directory
 
 ```
-magazine-web-ppt/
+guizang-ppt-skill/
 ├── SKILL.md              ← main skill file: workflow, principles, common mistakes
 ├── README.md             ← Chinese README
 ├── README.en.md          ← this file
