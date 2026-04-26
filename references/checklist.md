@@ -170,6 +170,30 @@ Hero Cover → Act Divider (hero) → 3-4 pages non-hero → Act Divider (hero)
 
 用 `XX / 总页数` 的格式（比如 `05 / 27`）。**不要在右上角加动态页码**（会和 `.chrome` 重复）。
 
+### 9b. 动效系统:每一页都要有 data-anim 标记
+
+**现象**:生成后打开浏览器,翻页时内容直接"啪"地出来,没有任何节奏感——杂志风完全靠排版硬撑,少了层级展开的仪式感。
+
+**根因**:完全没给任何元素加 `data-anim`,Motion One 脚本找不到可播的元素,整页静态出现。
+
+**做法**:
+- 所有正文页,**至少给 kicker / 主标题 / lead / callout / stat-card / figure 这些叶子元素加 `data-anim`**
+- **Hero 页**(开场/幕封/问题/结尾):所有核心块(kicker + 大标题 + lead + meta-row)都要加
+- **不需要特殊 recipe 的页**:什么也不用写,默认 cascade 就好看
+- **需要特殊 recipe 的 4 类页**:必须在 `<section>` 上加对应 `data-animate`
+  - 大引用 → `data-animate="quote"` + 每行 `<span data-anim="line" style="display:block">`
+  - Before/After 对比 → `data-animate="directional"` + 左列 `data-anim="left"` + 右列 `data-anim="right"`
+  - Pipeline 流水线 → `data-animate="pipeline"` + 每 step 加 `data-anim="step"`
+  - Hero 页(自动用 hero recipe,但仍需给元素加 `data-anim`)
+
+**自检**:生成后 `grep -c 'data-anim' index.html`,应该数十条以上。如果只有个位数,一定漏标了。
+
+### 9c. Pipeline 页必须加 data-animate="pipeline"
+
+**现象**:流水线页直接全部淡入,失去"一步步讲"的节奏,但切到下一页时又只能往前翻,没法回到上一个 step。
+
+**做法**:Layout 6 的 `<section>` 必须加 `data-animate="pipeline"`。演示时按 →/空格/滚轮下滑可以**逐个点亮 step**,全部点亮之后再按 → 才会翻到下一页。这个节奏是刻意的,不是 bug。
+
 ---
 
 ## 🟢 P2 · 视觉打磨
@@ -260,6 +284,14 @@ JS 会动态算总页数并扩展底部翻页圆点，但 `.chrome` 里的 `XX /
   □ 底部圆点数量与总页数匹配
   □ chrome 里的页码和实际页号一致
   □ ESC 键触发索引视图（如果保留）
+
+动效
+  □ `assets/motion.min.js` 存在(本地兜底)
+  □ 翻页时内容逐个淡入,不是"啪"一下全出
+  □ 大引用页 `<section>` 带 `data-animate="quote"`,每行 `<span data-anim="line">`
+  □ Before/After 对比页 `<section>` 带 `data-animate="directional"`,左右列标 left/right
+  □ Pipeline 页 `<section>` 带 `data-animate="pipeline"`,每 step 标 data-anim="step"
+  □ `grep -c 'data-anim' index.html` 数量 ≥ 页数 × 3(平均每页 3 个以上标记)
 ```
 
 全勾完，才是合格的 PPT。
